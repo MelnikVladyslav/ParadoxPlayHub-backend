@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33712.159
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParadoxPlayHub_backend", "ParadoxPlayHub_backend\ParadoxPlayHub_backend.csproj", "{C4B9CFC9-8876-4952-9EAD-AEAB7A362CEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParadoxPlayHub_backend", "ParadoxPlayHub_backend\ParadoxPlayHub_backend.csproj", "{C4B9CFC9-8876-4952-9EAD-AEAB7A362CEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{5B1318CC-9C07-4F82-82C0-88A169E1E6AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{5B1318CC-9C07-4F82-82C0-88A169E1E6AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BussnesLogic", "BussnesLogic\BussnesLogic.csproj", "{461BFB62-716C-4638-9FBD-938BE2886610}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BussnesLogic", "BussnesLogic\BussnesLogic.csproj", "{461BFB62-716C-4638-9FBD-938BE2886610}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
