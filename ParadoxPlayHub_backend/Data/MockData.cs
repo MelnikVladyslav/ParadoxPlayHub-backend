@@ -30,5 +30,15 @@ namespace Data
                 new Ganr() { Id = (int)TypeG.InteractiveFiction, Name = "Інтерактивні історії"},
             });
         }
+
+        public static void SeedRoles(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Roles>().HasData(new Roles[]
+            {
+                new Roles() { Id = TypesD.Full.ToString(), Name = "Адмін" },
+                new Roles() { Id = TypesD.Client.ToString(), Name = "Клієнт" },
+                new Roles() { Id = TypesD.Developer.ToString(), Name = "Розробник" },
+            });
+        }
     }
 }
