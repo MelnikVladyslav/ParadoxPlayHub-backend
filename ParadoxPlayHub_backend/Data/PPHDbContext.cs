@@ -21,7 +21,7 @@ namespace Data
         {
             base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder.UseNpgsql(@"Server=127.0.0.200:5432;Database=u4672635_pph;User ID=u4672635;Password=vladadmin2222");
+            optionsBuilder.UseNpgsql(@"Server=localhost:5433;Database=pph_db;User ID=postgres;Password=Vladadmin2222");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
