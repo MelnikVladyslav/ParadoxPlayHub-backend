@@ -41,7 +41,10 @@ namespace ParadoxPlayHub_backend
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            app.UseCors(options =>
+            {
+                options.WithOrigins("http://localhost:3000");
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
