@@ -5,6 +5,7 @@ using Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -45,7 +46,9 @@ namespace ParadoxPlayHub_backend.Controllers
             {
                 FirstName = userDTO.FirstName,
                 Email = userDTO.Email,
-                PasswordHash = await ComputeSHA256Hash(userDTO.Password)
+                NormalizedEmail = userManager.NormalizeEmail(userDTO.Email),
+                PasswordHash = await ComputeSHA256Hash(userDTO.Password),
+                RoleId = "Client"
             };
 
             regUser.Token = await GenerateJwtTokenAsync(userDTO.Email, regUser);
@@ -125,6 +128,13 @@ namespace ParadoxPlayHub_backend.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet("get-users")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        {
+            var users = await _context.Users.ToListAsync();
+            return Ok(users);
         }
 
         private async Task<string> ComputeSHA256Hash(string password)

@@ -19,7 +19,7 @@ namespace ParadoxPlayHub_backend.Controllers
         }
 
         [HttpGet("get-ganres")]
-        public async Task<ActionResult<IEnumerable<Ganr>>> GetTransports()
+        public async Task<ActionResult<IEnumerable<Ganr>>> GetGanres()
         {
             var ganres = await _context.Ganrs.ToListAsync();
             return Ok(ganres);

@@ -32,19 +32,6 @@ namespace Data
                                                     .WithMany(c => c.Users)
                                                     .HasForeignKey(p => p.RoleId);
 
-            modelBuilder.Entity<PidGanreGame>()
-                .HasKey(ba => new { ba.GanrId, ba.GameId });
-
-            modelBuilder.Entity<PidGanreGame>()
-                .HasOne(ba => ba.Ganr)
-                .WithMany(b => b.Games)
-                .HasForeignKey(ba => ba.GanrId);
-
-            modelBuilder.Entity<PidGanreGame>()
-                .HasOne(ba => ba.Game)
-                .WithMany(a => a.Ganres)
-                .HasForeignKey(ba => ba.GameId);
-
             modelBuilder.SeedGanres();
             modelBuilder.SeedRoles();
         }
@@ -53,9 +40,9 @@ namespace Data
         public virtual DbSet<Filters> Filters { get; set; }
         public virtual DbSet<Ganr> Ganrs { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<PidGanreGame> PidGanreGames { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Game> Games { get; set; }
+        public virtual DbSet<News> News { get; set; }
 
     }
 }

@@ -55,6 +55,9 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("GanrId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("text");
@@ -72,6 +75,8 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DeveloperId");
+
+                    b.HasIndex("GanrId");
 
                     b.HasIndex("OrderId");
 
@@ -167,6 +172,31 @@ namespace Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BussnesLogic.Entity.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News");
+                });
+
             modelBuilder.Entity("BussnesLogic.Entity.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -190,21 +220,6 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("BussnesLogic.Entity.PidGanreGame", b =>
-                {
-                    b.Property<int>("GanrId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("GanrId", "GameId");
-
-                    b.HasIndex("GameId");
-
-                    b.ToTable("PidGanreGames");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -425,19 +440,19 @@ namespace Data.Migrations
                         new
                         {
                             Id = "Full",
-                            ConcurrencyStamp = "e9846a14-b04d-4d3f-a3c8-f5a062b1fe76",
+                            ConcurrencyStamp = "da2fd384-7746-4ce7-adde-92b4e698efb6",
                             Name = "Адмін"
                         },
                         new
                         {
                             Id = "Client",
-                            ConcurrencyStamp = "f95a8c78-47c3-4538-9aa1-a7ad5e2f43be",
+                            ConcurrencyStamp = "4367977f-76cf-4a42-9a24-c1c6933ffdd5",
                             Name = "Клієнт"
                         },
                         new
                         {
                             Id = "Developer",
-                            ConcurrencyStamp = "67e4a850-5029-4ec0-b226-f48162c9b354",
+                            ConcurrencyStamp = "68678313-9e33-48f6-a96c-7a6ca67dd446",
                             Name = "Розробник"
                         });
                 });
@@ -479,11 +494,19 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BussnesLogic.Entity.Ganr", "Ganr")
+                        .WithMany("Games")
+                        .HasForeignKey("GanrId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BussnesLogic.Entity.Order", null)
                         .WithMany("Games")
                         .HasForeignKey("OrderId");
 
                     b.Navigation("Developer");
+
+                    b.Navigation("Ganr");
                 });
 
             modelBuilder.Entity("BussnesLogic.Entity.Order", b =>
@@ -495,25 +518,6 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("BussnesLogic.Entity.PidGanreGame", b =>
-                {
-                    b.HasOne("BussnesLogic.Entity.Game", "Game")
-                        .WithMany("Ganres")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BussnesLogic.Entity.Ganr", "Ganr")
-                        .WithMany("Games")
-                        .HasForeignKey("GanrId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("Ganr");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -576,11 +580,6 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("BussnesLogic.Entity.Game", b =>
-                {
-                    b.Navigation("Ganres");
                 });
 
             modelBuilder.Entity("BussnesLogic.Entity.Ganr", b =>

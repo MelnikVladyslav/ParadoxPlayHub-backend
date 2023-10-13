@@ -28,7 +28,7 @@ namespace BussnesLogic.Entity
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<PidGanreGame> Games { get; set; } = new HashSet<PidGanreGame>();
+        public ICollection<Game> Games { get; set; } = new HashSet<Game>();
 
     }
 }

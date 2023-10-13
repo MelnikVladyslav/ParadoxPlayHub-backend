@@ -52,6 +52,21 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "News",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_News", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -226,6 +241,7 @@ namespace Data.Migrations
                     Price = table.Column<float>(type: "real", nullable: false),
                     DeveloperId = table.Column<string>(type: "text", nullable: false),
                     ImagePath = table.Column<string>(type: "text", nullable: false),
+                    GanrId = table.Column<int>(type: "integer", nullable: false),
                     OrderId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -238,34 +254,26 @@ namespace Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Games_Ganrs_GanrId",
+                        column: x => x.GanrId,
+                        principalTable: "Ganrs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Games_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PidGanreGames",
-                columns: table => new
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
+                values: new object[,]
                 {
-                    GanrId = table.Column<int>(type: "integer", nullable: false),
-                    GameId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PidGanreGames", x => new { x.GanrId, x.GameId });
-                    table.ForeignKey(
-                        name: "FK_PidGanreGames_Games_GameId",
-                        column: x => x.GameId,
-                        principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PidGanreGames_Ganrs_GanrId",
-                        column: x => x.GanrId,
-                        principalTable: "Ganrs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    { "Client", "4367977f-76cf-4a42-9a24-c1c6933ffdd5", "Roles", "Клієнт", null },
+                    { "Developer", "68678313-9e33-48f6-a96c-7a6ca67dd446", "Roles", "Розробник", null },
+                    { "Full", "da2fd384-7746-4ce7-adde-92b4e698efb6", "Roles", "Адмін", null }
                 });
 
             migrationBuilder.InsertData(
@@ -337,6 +345,11 @@ namespace Data.Migrations
                 column: "DeveloperId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Games_GanrId",
+                table: "Games",
+                column: "GanrId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Games_OrderId",
                 table: "Games",
                 column: "OrderId");
@@ -345,11 +358,6 @@ namespace Data.Migrations
                 name: "IX_Orders_UserId",
                 table: "Orders",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PidGanreGames_GameId",
-                table: "PidGanreGames",
-                column: "GameId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -373,10 +381,10 @@ namespace Data.Migrations
                 name: "Filters");
 
             migrationBuilder.DropTable(
-                name: "PidGanreGames");
+                name: "Games");
 
             migrationBuilder.DropTable(
-                name: "Games");
+                name: "News");
 
             migrationBuilder.DropTable(
                 name: "Ganrs");
