@@ -58,6 +58,36 @@ namespace ParadoxPlayHub_backend.Controllers
             return Ok(regUser);
         }
 
+        [HttpPost("sign-up")]
+        public async Task<IActionResult> SignUp(SignUpDTO signUp)
+        {
+            User user;
+            string normEm = userManager.NormalizeEmail(signUp.Email);
+            user = await userManager.FindByEmailAsync(normEm);
+
+            if (user != null)
+            {
+                try
+                {
+                    // Пошук моделі за ідентифікатором
+                    var existingModel = await _context.Users.FindAsync(user.Id);
+
+                    if (existingModel == null)
+                        return NotFound();
+
+                    return Ok(existingModel);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"Помилка при вході: {ex.Message}");
+                }
+            }
+            else
+            {
+                return NotFound(); // Користувача з такою адресою не знайдено.
+            }
+        }
+
         [HttpPost("reg-dev")]
         public async Task<IActionResult> RegisterToDeveloper(UserDTO user)
         {
