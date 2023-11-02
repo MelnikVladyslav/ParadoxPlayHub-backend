@@ -43,5 +43,12 @@ namespace ParadoxPlayHub_backend.Controllers
             var gamers = await _context.Games.ToListAsync();
             return Ok(gamers);
         }
+
+        [HttpGet("get-my-games")]
+        public async Task<ActionResult<IEnumerable<Game>>> GetMyGame(LibraryDTO libUser)
+        {
+            var myGames = libUser.Games.ToList();
+            return Ok(myGames);
+        }
     }
 }
