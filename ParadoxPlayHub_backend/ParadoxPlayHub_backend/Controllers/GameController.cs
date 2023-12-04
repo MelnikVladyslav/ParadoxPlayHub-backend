@@ -50,5 +50,16 @@ namespace ParadoxPlayHub_backend.Controllers
             var myGames = libUser.Games.ToList();
             return Ok(myGames);
         }
+
+        [HttpGet("get-game")]
+        public async Task<ActionResult> GetGame(int id)
+        {
+            var game = await _context.Games.FindAsync(id);
+            if (game == null)
+            {
+                return NotFound();
+            }
+            return Ok(game);
+        }
     }
 }
